@@ -391,15 +391,6 @@ object Build {
           } yield {
             s"-Xplugin:$jarPath"
           }
-        },
-        libraryDependencies ++= {
-          if (scalaVersion.value.startsWith("2.10.") ||
-              scalaVersion.value.startsWith("2.11.")) {
-            Seq.empty
-          } else {
-            Seq("org.scala-js" % "scala-junit-mixin-plugin" % "0.1.0" %
-                "test-plugin" cross CrossVersion.full)
-          }
         }
       )
     }
