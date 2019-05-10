@@ -190,13 +190,15 @@ object Build {
   }
 
   val commonSettings = Seq(
-      scalaVersion := "2.12.8",
+      scalaVersion := "2.13.0-pre-2ef2f9f",
       organization := "org.scala-js",
       version := scalaJSVersion,
 
       normalizedName ~= {
         _.replace("scala.js", "scalajs").replace("scala-js", "scalajs")
       },
+      
+      resolvers += "scala-integration" at "https://scala-ci.typesafe.com/artifactory/scala-integration/",
 
       homepage := Some(url("https://www.scala-js.org/")),
       startYear := Some(2013),
@@ -355,7 +357,7 @@ object Build {
   val noClassFilesSettings: Setting[_] = (
       scalacOptions in (Compile, compile) ++= {
         if (isGeneratingEclipse) Seq()
-        else Seq("-Yskip:cleanup,icode,jvm")
+        else Seq("-Yskip:cleanup,jvm")
       }
   )
 

@@ -444,7 +444,7 @@ abstract class PrepJSInterop[G <: Global with Singleton](val global: G)
           }
         }
 
-        val exports = exporters.get(clsSym).toIterable.flatten
+        val exports = exporters.get(clsSym).toList.flatten
         // Add exports to the template
         treeCopy.Template(tree, parents, self, body ++ exports)
 

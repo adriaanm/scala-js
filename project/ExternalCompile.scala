@@ -61,8 +61,19 @@ object ExternalCompile {
             IO.delete(classesDirectory)
           IO.createDirectory(classesDirectory)
 
-          val sourcesArgs = sources.map(_.getAbsolutePath()).toList
+          // val sourcesArgs = sources.map(_.getAbsolutePath()).toList
 
+          val sourcesArgs = {
+            val tmp = sources.map(_.getAbsolutePath()).toList.sorted
+            println(sources)
+            if (tmp.head.contains("javalanglib")) {
+              val Array(pre, _) = tmp.head.split("javalanglib")
+              List("javalanglib/src/main/scala/java/lang/ThreadLocal.scala", "javalanglib/src/main/scala/java/lang/Thread.scala", "javalanglib/src/main/scala/java/lang/Appendable.scala", "javalanglib/src/main/scala/java/lang/Runnable.scala", "javalanglib/src/main/scala/java/lang/ObjectClone.scala", "javalanglib/src/main/scala/java/lang/Readable.scala", "javalanglib/src/main/scala/java/lang/Class.scala", "javalanglib/src/main/scala/java/lang/Comparable.scala", "javalanglib/src/main/scala/java/lang/Void.scala", "javalanglib/src/main/scala/java/lang/Runtime.scala", "javalanglib/src/main/scala/java/lang/System.scala", "javalanglib/src/main/scala/java/lang/StackTrace.scala", "javalanglib/src/main/scala/java/lang/CharSequence.scala", "javalanglib/src/main/scala/java/lang/ClassLoader.scala", "javalanglib/src/main/scala/java/lang/Throwables.scala", "javalanglib/src/main/scala/java/lang/Iterable.scala", "javalanglib/src/main/scala/java/lang/StringBuilder.scala", "javalanglib/src/main/scala/java/lang/Number.scala", "javalanglib/src/main/scala/java/lang/Enum.scala", "javalanglib/src/main/scala/java/lang/Long.scala", "javalanglib/src/main/scala/java/lang/FloatingPointBits.scala", "javalanglib/src/main/scala/java/lang/Cloneable.scala", "javalanglib/src/main/scala/java/lang/Character.scala", "javalanglib/src/main/scala/java/lang/Short.scala", "javalanglib/src/main/scala/java/lang/Byte.scala", "javalanglib/src/main/scala/java/lang/StackTraceElement.scala", "javalanglib/src/main/scala/java/lang/_String.scala", "javalanglib/src/main/scala/java/lang/Float.scala", "javalanglib/src/main/scala/java/lang/StringBuffer.scala", "javalanglib/src/main/scala/java/lang/AutoCloseable.scala", "javalanglib/src/main/scala/java/lang/Integer.scala", "javalanglib/src/main/scala/java/lang/Math.scala", "javalanglib/src/main/scala/java/lang/Boolean.scala", "javalanglib/src/main/scala/java/lang/Double.scala", "javalanglib/src/main/scala/java/lang/InheritableThreadLocal.scala", "javalanglib/src/main/scala/java/lang/reflect/Array.scala", "javalanglib/src/main/scala/java/lang/annotation/Annotation.scala", "javalanglib/src/main/scala/java/lang/ref/PhantomReference.scala", "javalanglib/src/main/scala/java/lang/ref/WeakReference.scala", "javalanglib/src/main/scala/java/lang/ref/SoftReference.scala", "javalanglib/src/main/scala/java/lang/ref/Reference.scala", "javalanglib/src/main/scala/java/lang/ref/ReferenceQueue.scala"
+              ).map(file => pre + file)
+            }
+            else tmp
+          }
+          
           /* run.run() below in doCompileJS() will emit a call to its
            * logger.info("Running scala.tools.nsc.scalajs.Main [...]")
            * which we do not want to see. We use this patched logger to
